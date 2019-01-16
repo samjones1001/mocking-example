@@ -3,7 +3,7 @@ require 'example'
 describe Bike do
   let(:bike) { described_class.new }
 
-  it 'is working when initialized' do
+  it 'is working at initialization' do
     expect(bike.working).to be(true)
   end
 
@@ -16,8 +16,7 @@ describe Bike do
 end
 
 describe DockingStation do
-  let(:station) { DockingStation.new }
-  let(:bike)    { Bike.new }
+  let(:station)       { DockingStation.new }
 
   it 'is empty at initialization' do
     expect(station.bikes).to be_empty
@@ -25,6 +24,7 @@ describe DockingStation do
 
   describe '#dock' do
     it 'stores the bike' do
+      bike = Bike.new
       station.dock(bike)
       expect(station.bikes).to include(bike)
     end
@@ -32,11 +32,13 @@ describe DockingStation do
 
   describe '#release' do
     it 'releases working bikes' do
+      bike = Bike.new
       station.dock(bike)
       expect(station.release).to eq(bike)
     end
 
     it 'raises an error if the bike is broken' do
+      bike = Bike.new
       bike.report_broken
       station.dock(bike)
       expect{ station.release }.to raise_error 'bike broken!'
